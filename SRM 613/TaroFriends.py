@@ -3,19 +3,16 @@ import math,string,itertools,fractions,heapq,collections,re,array,bisect
 
 class TaroFriends:
     def getNumber(self, coordinates, X):
-#        mindist = 200000001
         coords = list(coordinates)
         coords.sort()
         orig_span = coords[-1] - coords[0]
-        if orig_span > X:
-            mid = float((coords[-1] + coords[0]) / 2)
-            print(str(coords))
-            for i in range(len(coords)):
-                if coords[i] <= mid:
-                    coords[i] += X
-                else:
-                    coords[i] -= X
-        return max(coords) - min(coords)
+        mindist = orig_span
+        for i in range(len(coords)-1):
+            newmin = min(coords[i+1]-X, coords[0]+X)
+            newmax = max(coords[i]+X, coords[-1]-X)
+            if mindist > abs(newmax - newmin):
+                mindist = abs(newmax - newmin)
+        return mindist
 
 # CUT begin
 # TEST CODE FOR PYTHON {{{
